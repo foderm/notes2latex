@@ -78,7 +78,7 @@ async def transcribe_page(
         model=config.model,
         messages=messages,
         temperature=config.temperature,
-        max_tokens=config.max_tokens,
+        max_completion_tokens=config.max_completion_tokens,
         api_key=config.api_key,
     )
     return strip_code_fences(text)
@@ -119,7 +119,7 @@ async def fix_latex(
         model=config.model,
         messages=messages,
         temperature=0.0,
-        max_tokens=config.max_tokens,
+        max_completion_tokens=config.max_completion_tokens,
         api_key=config.api_key,
     )
     return strip_code_fences(text)
