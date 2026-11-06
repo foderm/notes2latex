@@ -12,7 +12,7 @@ async def acompletion(
     model: str,
     messages: list[dict],
     temperature: float,
-    max_tokens: int,
+    max_completion_tokens: int,
     api_key: str | None = None,
 ) -> str:
     """Run an async litellm completion and return the text content."""
@@ -20,7 +20,7 @@ async def acompletion(
         "model": model,
         "messages": messages,
         "temperature": temperature,
-        "max_tokens": max_tokens,
+        "max_completion_tokens": max_completion_tokens,
     }
     if api_key is not None:
         kwargs["api_key"] = api_key
