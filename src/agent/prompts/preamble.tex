@@ -1,7 +1,12 @@
 \documentclass[12pt]{article}
 
-% --- Packages ---
-\usepackage{amsmath, amssymb, amsthm}
+% --- Fonts and layout ---
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[a4paper,left=2.8cm,right=2.8cm,top=3cm,bottom=3cm]{geometry}
+
+% --- Math ---
+\usepackage{amsmath,amssymb,amsthm}
 \usepackage{mathtools}
 \usepackage{thmtools}
 \usepackage{cancel}
@@ -13,28 +18,153 @@
 \let\div\olddiv
 
 \usepackage{siunitx}
-\usepackage{tikz, tikz-cd, pgfplots}
+\usepackage{enumitem}
+
+% --- Graphics ---
+\usepackage{graphicx}
+\usepackage{tikz,tikz-cd,pgfplots}
 \pgfplotsset{compat=1.18}
-\usetikzlibrary{decorations.pathreplacing, arrows.meta, calc}
+\usetikzlibrary{decorations.pathreplacing,arrows.meta,calc}
+
+% --- Algorithms, code, and boxes ---
 \usepackage{algorithm2e}
 \usepackage{listings}
-\usepackage{geometry}
-\geometry{margin=1in}
-\usepackage{enumitem}
-\usepackage{hyperref}
 \usepackage{tcolorbox}
 
+% --- Headers and footers ---
+\usepackage{fancyhdr}
+\setlength{\headheight}{14pt}
+
+\fancypagestyle{mainstyle}{
+  \fancyhf{}
+  \fancyhead[R]{\nouppercase{\rightmark}}
+  \fancyfoot[C]{\thepage}
+  \renewcommand{\headrulewidth}{0.4pt}
+  \renewcommand{\footrulewidth}{0pt}
+}
+
+\fancypagestyle{plain}{
+  \fancyhf{}
+  \fancyfoot[C]{\thepage}
+  \renewcommand{\headrulewidth}{0pt}
+  \renewcommand{\footrulewidth}{0pt}
+}
+
+\renewcommand{\sectionmark}[1]{\markright{\thesection\ #1}}
+
+% --- Hyperlinks ---
+\usepackage[hidelinks,hypertexnames=false]{hyperref}
+
+% --- Sources ---
+\usepackage[backend=biber,style=alphabetic]{biblatex}
+\addbibresource{references.bib}
+
 % --- Theorem environments ---
+\theoremstyle{plain}
 \newtheorem{theorem}{Theorem}[section]
 \newtheorem{lemma}[theorem]{Lemma}
-\newtheorem{corollary}[theorem]{Corollary}
 \newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+
 \theoremstyle{definition}
 \newtheorem{definition}[theorem]{Definition}
 \newtheorem{example}[theorem]{Example}
 \newtheorem{exercise}[theorem]{Exercise}
+
 \theoremstyle{remark}
 \newtheorem{remark}[theorem]{Remark}
 \newtheorem{notation}[theorem]{Notation}
 
+% --- Claim environment (unnumbered) ---
+\newtheorem*{claim}{Claim}
+
+% --- Proof of claim ---
+\newcommand{\claimqed}{\ensuremath{\square_{\text{\tiny\textit{C}}}}}
+
+\newenvironment{claimproof}
+  {\renewcommand{\qedsymbol}{\claimqed}\begin{proof}[Proof of claim]}
+  {\end{proof}}
+
+% --- Structured proof blocks ---
+\usepackage{array}
+
+% Width of the right-hand explanation column
+\newlength{\pfnotewidth}
+\setlength{\pfnotewidth}{0.36\linewidth}
+
+\newcolumntype{F}{>{$}l<{$}}
+
+\makeatletter
+\newenvironment{pfblock}
+  {%
+    \par\vspace{1.5\baselineskip}\noindent
+    \begingroup
+    \footnotesize
+    \setlength{\tabcolsep}{0pt}%
+    \renewcommand{\arraystretch}{0.88}%
+    \begin{tabular*}{\linewidth}{@{}F@{\;:\;}F@{\extracolsep{\fill}}F@{}}
+  }
+  {%
+    \end{tabular*}%
+    \endgroup
+    \par\vspace{1.5\baselineskip}
+    \@endpetrue\ignorespacesafterend
+  }
+\makeatother
+
+\usepackage{todonotes}
+
+\newcommand{\squad}{\hspace{0.5em}}
+
+% --- Meta implications ---
+\DeclareFontFamily{U}{mathb}{\hyphenchar\font45}
+\DeclareFontShape{U}{mathb}{m}{n}{
+  <-6> mathb5 <6-7> mathb6 <7-8> mathb7
+  <8-9> mathb8 <9-10> mathb9
+  <10-12> mathb10 <12-> mathb12
+}{}
+\DeclareSymbolFont{mathb}{U}{mathb}{m}{n}
+\DeclareMathSymbol{\llcurly}{\mathrel}{mathb}{"CE}
+\DeclareMathSymbol{\ggcurly}{\mathrel}{mathb}{"CF}
+
+\newcommand\metametaLRArrow{\text{
+  $\llcurly\hspace*{-0.77ex}
+  \Relbar\joinrel\Relbar\joinrel\Relbar
+  \hspace*{-0.77ex}\ggcurly$}}
+
+\newcommand\metametaDefLRArrow{\text{$:
+  \llcurly\hspace*{-0.77ex}
+  \Relbar\joinrel\Relbar\joinrel\Relbar
+  \hspace*{-0.77ex}\ggcurly$}}
+
+\newcommand\metametaRArrow{\text{
+  $\Relbar\joinrel\Relbar\joinrel\Relbar
+  \hspace*{-0.77ex}\ggcurly$}}
+
+\newcommand\metametaLArrow{\text{
+  $\llcurly\hspace*{-0.77ex}
+  \Relbar\joinrel\Relbar\joinrel\Relbar$}}
+
+\newcommand\RightArrow{\text{
+  $\hspace*{-.5ex}\Relbar\hspace*{-.8ex}
+  \joinrel\Relbar\hspace*{-0.77ex}\ggcurly$}}
+
+\newcommand\LeftArrow{\text{
+  $\hspace*{-.5ex}\llcurly\hspace*{-0.77ex}\Relbar
+  \hspace*{-.8ex}\joinrel\Relbar$}}
+
+% --- superwidetilde ---
+\newcommand*\superwidetilde[1]{%
+  \begingroup
+    \settowidth{\dimen0}{$#1$}%
+    \dimen0=1.175\dimen0
+    \rlap{%
+      \kern-.5\dimen0
+      \kern.5\dimen2
+      \resizebox{\dimen0}{\totalheight}{$\widetilde{\phantom{x\vphantom{#1}}}$}%
+    }%
+  \endgroup
+  #1}
+
 \begin{document}
+\pagestyle{mainstyle}
