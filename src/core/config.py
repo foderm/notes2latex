@@ -17,7 +17,7 @@ class Settings(BaseSettings):
     # LLM settings
     model: str = "openrouter/google/gemini-3-flash-preview"
     temperature: float = 0.1
-    max_completion_tokens: int = 16384
+    max_tokens: int = 16384
 
     # Pipeline settings
     max_retries: int = 3
