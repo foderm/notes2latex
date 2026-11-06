@@ -12,7 +12,7 @@ async def acompletion(
     model: str,
     messages: list[dict],
     temperature: float,
-    max_tokens: int,
+    max_completion_tokens: int,
     api_key: str | None = None,
 ) -> str:
     """Run an async litellm completion and return the text content."""
