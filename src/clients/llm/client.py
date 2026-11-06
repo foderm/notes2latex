@@ -19,8 +19,7 @@ async def acompletion(
     kwargs: dict = {
         "model": model,
         "messages": messages,
-        "temperature": temperature,
-        "max_tokens": max_tokens,
+        "max_completion_tokens": max_tokens,
     }
     if api_key is not None:
         kwargs["api_key"] = api_key

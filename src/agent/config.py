@@ -87,7 +87,6 @@ class AgentConfig:
         """Build AgentConfig from app Settings with optional per-request overrides."""
         base = {
             "model": settings.model,
-            "temperature": settings.temperature,
             "max_tokens": settings.max_tokens,
             "max_retries": settings.max_retries,
             "context_lines": settings.context_lines,
